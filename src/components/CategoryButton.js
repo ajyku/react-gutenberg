@@ -5,12 +5,12 @@ import { useTheme } from '../context/ThemeContext';
 import { ReactComponent as NextIcon } from '../assets/img/Next.svg';
 
 const Button = (props) => {
-  const { Icon, name, name1 } = props;
+  const { Icon, name, name1, device } = props;
   const navigate = useNavigate();
   const { colors } = useTheme();
 
   return (
-    <StyledDiv onClick={() => navigate(`/list/${name}`)}>
+    <StyledDiv onClick={() => navigate(`/list/${name}`)} device={device}>
       <div style={{ display: 'inline-flex', alignItems: 'center' }}>
         <div>
           <Icon style={{ width: 30, height: 30 }} />
@@ -37,7 +37,8 @@ const Button = (props) => {
 export default Button;
 
 const StyledDiv = styled.div`
-  width: 42%;
+  width: ${(props) =>
+    ['mobile', 'landscape'].includes(props.device) ? '100%' : '42%'};
   height: 50;
   display: flex;
   flex-direction: row;
@@ -47,7 +48,8 @@ const StyledDiv = styled.div`
   padding-top: 16px;
   border-radius: 4px;
   box-shadow: 0 2px 5px 0 rgba(211, 209, 238, 0.5);
-  margin-bottom: 40px;
+  margin-bottom: ${(props) =>
+    ['mobile', 'landscape'].includes(props.device) ? '24px' : '40px'};
   background: white;
   &:hover {
     cursor: pointer;

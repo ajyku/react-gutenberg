@@ -5,7 +5,7 @@ import { ReactComponent as SearchIcon } from '../assets/img/Search.svg';
 import { ReactComponent as CancelIcon } from '../assets/img/Cancel.svg';
 import { useDebounce } from '../utils/CustomHooks';
 
-const SearchInput = ({ handleChange }) => {
+const SearchInput = ({ handleChange, device }) => {
   const [searchText, setSearchText] = useState();
 
   const _searchText = useDebounce(searchText, 500);
@@ -15,7 +15,7 @@ const SearchInput = ({ handleChange }) => {
   }, [_searchText]);
 
   return (
-    <StyledInput className={'inputWithIcon'}>
+    <StyledInput className={'inputWithIcon'} device={device}>
       <Input
         value={!searchText ? '' : searchText}
         onChange={(e) => setSearchText(e.target.value)}
@@ -75,7 +75,8 @@ const StyledInput = styled.div`
     background: none;
     border: none;
     position: absolute;
-    right: 0px;
+    right: ${(props) =>
+      ['mobile', 'landscape'].includes(props.device) ? '-32px' : '16px'};
     top: 50%;
     transform: translateY(-40%);
     svg {

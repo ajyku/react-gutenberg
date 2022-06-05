@@ -4,10 +4,23 @@ const GlobalContext = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
   const [windowSize, setWindowSize] = useState();
+  const [device, setDevice] = useState();
 
   useEffect(() => {
     function handleResize() {
       setWindowSize({ height: window.innerHeight, width: window.innerWidth });
+
+      if (window.innerWidth <= 481) {
+        setDevice('mobile');
+      } else if (window.innerWidth > 481 && window.innerWidth <= 600) {
+        setDevice('landscape');
+      } else if (window.innerWidth > 600 && window.innerWidth <= 961) {
+        setDevice('tablet');
+      } else if (window.innerWidth > 961) {
+        setDevice('laptop');
+      } else {
+        setDevice('other');
+      }
     }
 
     // Add event listener
@@ -20,7 +33,7 @@ export const GlobalContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ windowSize }}>
+    <GlobalContext.Provider value={{ windowSize, device }}>
       {children}
     </GlobalContext.Provider>
   );

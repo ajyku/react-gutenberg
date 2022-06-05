@@ -69,6 +69,7 @@ function Card({ item, gotoLink }) {
           WebkitLineClamp: 2,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
+          textTransform: 'uppercase',
         }}>
         {item.title}
       </div>

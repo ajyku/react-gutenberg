@@ -22,7 +22,9 @@ function List(props) {
   const [searchText, setSearchText] = useState(null);
   const [url, setUrl] = useState();
 
-  const { windowSize } = useGlobalContext();
+  const { device } = useGlobalContext();
+  // console.log('windowSize', windowSize, device);
+
   const { colors } = useTheme();
 
   const navigate = useNavigate();
@@ -130,100 +132,112 @@ function List(props) {
     <>
       <div
         style={{
+          height: '100vh',
           display: 'flex',
-          justifyContent: 'center',
-          // background: 'yellow',
+          flexDirection: 'column',
         }}>
         <div
           style={{
-            maxWidth: 700,
-            flex: 1,
             display: 'flex',
-            flexDirection: 'column',
-            marginRight: 48,
-            // background: 'red',
-            marginBottom: 16,
+            justifyContent: 'center',
+            // background: 'yellow',
           }}>
           <div
             style={{
+              maxWidth: 850,
+              flex: 1,
               display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 32,
-              // marginLeft: 16,
+              flexDirection: 'column',
+              marginRight: 48,
+              // background: 'red',
+              marginBottom: 16,
+              padding: '0px 16px',
             }}>
-            <HoverDiv hoverColor={colors.mediumGrey}>
-              <BackIcon onClick={() => navigate('/')} />
-            </HoverDiv>
             <div
               style={{
-                marginLeft: 8,
-                fontSize: 30,
-                fontFamily: 'Montserrat',
-                fontWeight: 900,
-                color: colors.primary,
-                textTransform: 'uppercase',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: 32,
+                // marginLeft: 16,
               }}>
-              {t(`topics.${id}`)}
+              <HoverDiv hoverColor={colors.mediumGrey}>
+                <BackIcon onClick={() => navigate('/')} />
+              </HoverDiv>
+              <div
+                style={{
+                  marginLeft: 8,
+                  fontSize: 30,
+                  fontFamily: 'Montserrat',
+                  fontWeight: 900,
+                  color: colors.primary,
+                  textTransform: 'capitalize',
+                }}>
+                {t(`topics.${id}`)}
+              </div>
+            </div>
+            <div style={{ margin: '16px 0px 8px 0px' }}>
+              <SearchInput
+                handleChange={(value) => setSearchText(value)}
+                device={device}
+              />
             </div>
           </div>
-          <div style={{ margin: '16px 0px 8px 0px' }}>
-            <SearchInput handleChange={(value) => setSearchText(value)} />
-          </div>
         </div>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          background: colors.light,
-        }}>
         <div
           style={{
-            maxWidth: 800,
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            // background: 'green',
+            flexGrow: 1,
+            justifyContent: 'center',
+            background: colors.light,
           }}>
           <div
             style={{
-              // margin: 16,
-              padding: 16,
-
+              maxWidth: 950,
               display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              // justifyContent: 'space-around',
+              flexDirection: 'column',
+              alignItems: 'center',
+              // background: 'green',
             }}>
-            {data !== undefined &&
-              data.map((item) => (
-                <Card key={uuidv4()} item={item} gotoLink={gotoLink} />
-              ))}
-            {loading && (
-              <div
-                style={{
-                  width: 114,
-                  height: 150,
-                  padding: 16,
-                  margin: 16,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontFamily: 'Montserrat',
-                  fontWeight: 700,
-                  color: colors.primary,
-                }}>
-                {t('loading')}...
-              </div>
+            <div
+              style={{
+                // margin: 16,
+                padding: 16,
+
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                // justifyContent: 'space-around',
+              }}>
+              {data !== undefined &&
+                data.map((item) => (
+                  <Card key={uuidv4()} item={item} gotoLink={gotoLink} />
+                ))}
+              {loading && (
+                <div
+                  style={{
+                    width: 114,
+                    height: 150,
+                    padding: 16,
+                    margin: 16,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontFamily: 'Montserrat',
+                    fontWeight: 700,
+                    color: colors.primary,
+                  }}>
+                  {t('loading')}...
+                </div>
+              )}
+            </div>
+            {!data || data.length === 0 ? (
+              <div style={{ margin: 24, color: 'grey' }}>No book</div>
+            ) : null}
+            {error !== undefined && (
+              <div style={{ margin: 64, color: 'red' }}>{error}</div>
             )}
           </div>
-          {!data || data.length === 0 ? (
-            <div style={{ margin: 24, color: 'grey' }}>No book</div>
-          ) : null}
-          {error !== undefined && (
-            <div style={{ margin: 64, color: 'red' }}>{error}</div>
-          )}
         </div>
       </div>
     </>

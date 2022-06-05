@@ -4,6 +4,7 @@ import { useGlobalContext } from '../context/GlobalContext';
 import { useTheme } from '../context/ThemeContext';
 import Pattern from '../assets/img/Pattern.svg';
 import { v4 as uuidv4 } from 'uuid';
+import LocaleButton from '../components/LocaleButton';
 
 import CategoryButton from '../components/CategoryButton';
 import { ReactComponent as FictionIcon } from '../assets/img/Fiction.svg';
@@ -25,24 +26,46 @@ const categories = [
 ];
 
 function Home() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  // console.log('i18n', i18n);
 
   const globalContext = useGlobalContext();
-  const { windowSize } = globalContext;
-  console.log('windowSize', windowSize);
+  const { device } = globalContext;
+  // console.log('windowSize', windowSize, device);
 
   const { colors } = useTheme();
 
+  function selectLanguage(lang) {
+    i18n.changeLanguage(lang);
+  }
+
   return (
-    <div style={{ padding: 16 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <div
         style={{
           display: 'flex',
           justifyContent: 'center',
-          paddingTop: 84,
-          paddingBottom: 40,
+          padding: '84px 16px 40px',
           backgroundImage: `url(${Pattern})`,
         }}>
+        <div
+          style={{
+            position: 'absolute',
+            top: 16,
+            right: 16,
+            display: 'inline-flex',
+          }}>
+          <LocaleButton
+            name="en"
+            handleClick={selectLanguage}
+            selected={i18n.language === 'en'}
+          />
+          <LocaleButton
+            name="fr"
+            handleClick={selectLanguage}
+            selected={i18n.language === 'fr'}
+          />
+        </div>
         <div>
           <div
             style={{
@@ -69,28 +92,37 @@ function Home() {
       </div>
       <div
         style={{
+          flexGrow: 1,
           display: 'flex',
           justifyContent: 'center',
           background: colors.light,
+          padding: '0px 16px',
         }}>
-        <div
-          style={{
-            maxWidth: 900,
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            padding: '40px 0px',
-          }}>
-          {categories
-            .sort((a, b) => a.order - b.order)
-            .map((category) => (
-              <CategoryButton
-                key={uuidv4()}
-                {...category}
-                name1={t(`topics.${category.name}`)}
-              />
-            ))}
+        <div>
+          <div
+            style={{
+              maxWidth: 900,
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              padding: '40px 0px',
+            }}>
+            {categories
+              .sort((a, b) =>
+                ['mobile', 'landscape'].includes(device)
+                  ? a.mOrder - b.mOrder
+                  : a.order - b.order
+              )
+              .map((category) => (
+                <CategoryButton
+                  key={uuidv4()}
+                  {...category}
+                  name1={t(`topics.${category.name}`)}
+                  device={device}
+                />
+              ))}
+          </div>
         </div>
       </div>
     </div>
