@@ -1,0 +1,15 @@
+{
+  "language": "fr",
+  "Hero-Title": "Gutenberg Projet",
+  "Hero-Sub-Title": "Un site Web de catalogage social qui vous permet de rechercher librement sa base de données de livres, d'annotations et de critiques.",
+  "topics": {
+    "fiction": "fiction",
+    "drama": "drame",
+    "humour": "humour",
+    "politics": "politique",
+    "philosophy": "philosophie",
+    "history": "l'histoire",
+    "adventure": "aventure"
+  },
+  "loading": "Chargement"
+}

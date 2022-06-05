@@ -36,3 +36,32 @@
     transform: rotate(360deg);
   }
 }
+
+/* local fonts */
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'),
+    url(./assets/fonts/Montserrat/Montserrat-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 700;
+  src: local('Montserrat'),
+    url(./assets/fonts/Montserrat/Montserrat-SemiBold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 900;
+  src: local('Montserrat'),
+    url(./assets/fonts/Montserrat/Montserrat-Bold.ttf) format('truetype');
+}
+
+/*
+@font-face {
+    font-family: 'Lato';
+    font-weight: 900;
+    src: local('Lato'), url(./fonts/Lato-Black.otf) format('opentype');
+} */
